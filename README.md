@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# react.js hello world
+first, you should install node and npm.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+create directory
+mkdir helloworld && cd helloworld
 
-## Available Scripts
+init npm
+npm init
 
-In the project directory, you can run:
+install webpack and webpack-dev-server
+npm install webpack webpack-dev-server --save
 
-### `npm start`
+install react and react-dom
+npm install react react-dom --save
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+install babel etc.
+npm install babel-core babel-loader babel-preset-react babel-preset-es2015 --save
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+add start scripts to package.json
 
-### `npm test`
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "webpack-dev-server --hot"
+    }
+touch webpack.config.js
+    var config = {
+      entry: './main.js',
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+      output: {
+        path: './',
+        filename: 'index.js'
+      },
 
-### `npm run build`
+      devServer: {
+        inline: true,
+        port: 7777
+      },
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+      module: {
+        loaders: [
+          {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: {
+              presets: ['es2015', 'react']
+            }
+          }
+        ]
+      }
+    }
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    module.exports = config;
+touch index.html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>react helloworld</title>
+      </head>
+      <body>
+        <div id="app"></div>
+        <script src="index.js" charset="utf-8"></script>
+      </body>
+    </html>
+touch App.jsx
+    import React from 'react';
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    class App extends React.Component {
+      render() {
+        return (
+          <div>simon, helloworld!!!</div>
+        );
+      }
+    }
 
-### `npm run eject`
+    export default App;
+touch main.js
+    import React from 'react';
+    import ReactDOM from 'react-dom';
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    import App from './App.jsx';
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ReactDOM.render(<App />, document.getElementById('app'));
+start server
+npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+open browser: http://localhost:7777
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+if you clone this repository to local, just npm install and npm start.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
